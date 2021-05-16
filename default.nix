@@ -13,7 +13,6 @@ let
     pkgs = with nixpkgs; {
       apptivate = callPackage ./pkgs/apptivate { };
       hey-email = callPackage ./pkgs/hey-email { };
-      basecamp = callPackage ./pkgs/basecamp { };
       clojure = callPackage ./pkgs/clojure { };
       activemq-artemis = callPackage ./pkgs/activemq-artemis { };
       zig-master = callPackage ./pkgs/zig-master { };
