@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, undmg, maintainers, config }:
+{ stdenv, lib, fetchurl, undmg, maintainers, config }:
 
 stdenv.mkDerivation {
   pname = "basecamp";
@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   meta = {
     description = "The All-In-One Toolkit for Working Remotely. (Basecamp 3)";
     homepage = https://basecamp.com/;
-    platforms = stdenv.lib.platforms.darwin;
+    platforms = lib.platforms.darwin;
     maintainers = [ maintainers.jeffh ];
   };
 }

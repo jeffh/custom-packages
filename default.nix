@@ -3,7 +3,7 @@
 let
     nixpkgs = import <nixpkgs> { inherit system; };
     allPkgs = nixpkgs // pkgs;
-    # maintainers = nixpkgs.lib.mkMerge(nixpkgs.stdenv.lib.maintainers (import ./maintainers));
+    # maintainers = nixpkgs.lib.mkMerge(nixpkgs.lib.maintainers (import ./maintainers));
     maintainers = nixpkgs.lib.maintainers // (import ./maintainers);
 
     callPackage = path: overrides:

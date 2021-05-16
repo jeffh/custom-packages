@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, openjdk, rlwrap, makeWrapper, maintainers }:
+{ stdenv, lib, fetchurl, openjdk, rlwrap, makeWrapper, maintainers }:
 
 let
   host = stdenv.hostPlatform;
@@ -7,18 +7,23 @@ let
              else if host.isLinux then "linux"
              else throw "unsupported platform";
 
-  platformSha256 = if host.isDarwin then "b2a4c560f7daf42f9575546cd80dc72d88167edd310286b15922df776bbc0357"
-                   else if host.isBSD then "63c8ef22e2b82b33d9848e969f684fb95111cd1f8307f761de81542397e2161f"
-                   else if host.isLinux then (
-                     if host.isx86_64 then "28985c886ee9b11bdf30ec18a042ae06e302bef50b8cc37664cce419cd3d97c7"
-                     else if stdenv.hostPlatform.isAarch64 then "28985c886ee9b11bdf30ec18a042ae06e302bef50b8cc37664cce419cd3d97c7"
+  platformSha256 = if host.isDarwin then (
+                     if host.isx86_64 then "eaa331bb172803852aa1c37cc2ebe12648283022bfe05fdb3e6511640109af04"
+                     else if stdenv.hostPlatform.isAarch64 then "f9fbbdb2895882679ed6abf3e232a0820ca7f99c1b3e2fb11ba8fb215347d54e"
+                     else throw "unsupported architecture on macOS"
+                   ) else if host.isBSD then (
+                     if host.isx86_64 then "9cdc5360eb4d8c8722556fb812815b69a3c1459ef2cc32f98d0c6627c1fbba0e"
+                     else throw "unsupported architecture on BSD"
+                   ) else if host.isLinux then (
+                     if host.isx86_64 then "b1625d34ea8594a74f431dd773b2acf2cba8913e68412bd6436d581fc7c16e45"
+                     else if stdenv.hostPlatform.isAarch64 then "e0cb7104c50ca9f5beff1db488dff589a2828164568fa9039706cdb63a8538eb"
                      else throw "unsupported architecture on linux"
                    ) else throw "unsupported platform";
 
 in
 stdenv.mkDerivation rec {
     pname = "zig-master";
-    version = "0.6.0+b28992de7";
+    version = "0.8.0-dev.2272+d98e39fa6";
 
     src = fetchurl {
       url = "https://ziglang.org/builds/zig-${platform}-${stdenv.hostPlatform.qemuArch}-${version}.tar.xz";
@@ -28,7 +33,7 @@ stdenv.mkDerivation rec {
     buildInputs = [ makeWrapper ];
 
     installPhase = let
-        binPath = stdenv.lib.makeBinPath [ rlwrap ];
+        binPath = lib.makeBinPath [ rlwrap ];
     in
       ''
         mkdir -p $prefix/lib
@@ -43,8 +48,8 @@ stdenv.mkDerivation rec {
     meta = {
         description = "The Zig Programming Language (version ${version})";
         homepage = https://ziglang.org/;
-        license = stdenv.lib.licenses.mit;
-        platforms = stdenv.lib.platforms.unix;
+        license = lib.licenses.mit;
+        platforms = lib.platforms.unix;
         maintainers = [ maintainers.jeffh ];
     };
 }
