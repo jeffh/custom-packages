@@ -7,6 +7,7 @@ let
              else if host.isLinux then "linux"
              else throw "unsupported platform";
 
+  # Values are provided on https://ziglang.org/download/
   platformSha256 = if host.isDarwin then (
                      if host.isx86_64 then "eaa331bb172803852aa1c37cc2ebe12648283022bfe05fdb3e6511640109af04"
                      else if stdenv.hostPlatform.isAarch64 then "f9fbbdb2895882679ed6abf3e232a0820ca7f99c1b3e2fb11ba8fb215347d54e"
@@ -23,7 +24,7 @@ let
 in
 stdenv.mkDerivation rec {
     pname = "zig-master";
-    version = "0.8.0-dev.2272+d98e39fa6";
+    version = "0.8.0-dev.2272+d98e39fa6"; # See url of at https://ziglang.org/download/
 
     src = fetchurl {
       url = "https://ziglang.org/builds/zig-${platform}-${stdenv.hostPlatform.qemuArch}-${version}.tar.xz";
