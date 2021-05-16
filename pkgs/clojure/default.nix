@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
     pname = "clojure";
-    version = "1.10.3.822";
+    version = "1.10.3.839"; # find in example at: https://clojure.org/guides/getting_started#_installation_on_linux
 
     src = fetchurl {
         url = "https://download.clojure.org/install/clojure-tools-${version}.tar.gz";
-        sha256 = "ab45779e8875e076b2d34953eef294935212f9cb8310a4a15630b2c53c157493";
+        sha256 = "1rzpv934ajnhb5q6z4dqa4dy8g21465cj3q5vviqd9hfmmvibzwx";
     };
 
     buildInputs = [ openjdk rlwrap makeWrapper ];
